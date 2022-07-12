@@ -1,0 +1,32 @@
+.comment-box{
+    width: max-content;
+    height: max-content;
+    padding: 3px;
+    border: 0.5px solid gray;
+    border-radius: 3px;
+    position: relative;
+    background: white;
+    z-index: 2;
+}
+.comment-box::before{
+    content: '';
+    width: 0;
+    height: 0;
+    border: 6px solid;
+    position: absolute;
+    bottom: -11.5px;
+    left: 10px;
+    border-color:  white transparent transparent;
+    z-index: 2;
+}
+.comment-box::after{
+    content: '';
+    width: 0;
+    height: 0;
+    border: 6px solid;
+    position: absolute;
+    bottom: -12px;
+    left: 10px;
+    border-color:  gray transparent transparent;
+    z-index: 1;
+}
