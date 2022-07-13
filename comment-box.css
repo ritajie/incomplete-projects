@@ -5,7 +5,8 @@
     border: 0.5px solid gray;
     border-radius: 3px;
     position: relative;
-    background: white;
+    color: white;
+    background: red;
     z-index: 2;
 }
 .comment-box::before{
@@ -16,7 +17,7 @@
     position: absolute;
     bottom: -11.5px;
     left: 10px;
-    border-color:  white transparent transparent;
+    border-color:  red transparent transparent;
     z-index: 2;
 }
 .comment-box::after{

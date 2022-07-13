@@ -18,10 +18,56 @@
 </body>
 
 <script>
+    var points = [
+        {
+            position: [116.50, 39.50],
+            content: "北京 A 楼盘",
+        },
+        {
+            position: [116.61, 39.81],
+            content: "北京 B 楼盘",
+        },
+        {
+            position: [116.32, 39.92],
+            content: "北京 C 楼盘",
+        },
+        {
+            position: [116.23, 39.53],
+            content: "北京 D 楼盘",
+        },        
+    ];
+
     function getPointContent(content) {
         return `<div class="comment-box">${content}</div>`
     }
 
+    function setPoints(points) {
+        /*
+        points: [
+           {
+               position: [111, 2222],
+               content: "北京 A 楼盘",
+           }
+        ]
+        */
+        AMapLoader.load({}).then((AMap)=>{
+            var markers = [];
+            for (var i = 0; i < points.length; i++) {
+                var marker = new AMap.Marker({
+                    position: points[i].position,
+                    offset: new AMap.Pixel(-16, -32),
+                    content: getPointContent(points[i].content)
+                });
+                marker.setMap(map);
+                markers.push(marker);
+            }
+            map.add(markers);
+        }).catch((e)=>{
+            console.error(e);
+        });
+    }
+
+    // main
     AMapLoader.load({
         key:'1df6ae0e2f320e0c22a801108d3ba5fc',
         version:'2.0',
@@ -33,29 +79,7 @@
     }).catch((e)=>{
         console.error(e);
     });
-
-    AMapLoader.load({}).then((AMap)=>{
-        var icon = new AMap.Icon({
-            image: './xxx.png',
-            imageSize: new AMap.Size(20, 32)
-        });
-
-        map.add(new AMap.Marker({
-            position:[116.38,39.92],
-            offset: new AMap.Pixel(-10, -32),
-            title: '北京1',
-            icon: icon
-        }));
-
-        map.add(new AMap.Marker({
-            position:[116.38,39.82],
-            offset: new AMap.Pixel(-16, -32),
-            title: '北京2',
-            content: getPointContent("北京2"),
-        }));
-    }).catch((e)=>{
-        console.error(e);
-    });
+    setPoints(points);
 </script>
 
 
