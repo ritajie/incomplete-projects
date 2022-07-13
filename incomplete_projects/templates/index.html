@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +9,7 @@
     <title>Document</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
-    <link rel="stylesheet" href="comment-box.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/comment-box.css' %}">
     <script src="https://webapi.amap.com/loader.js"></script>
 </head>
 
@@ -34,7 +35,7 @@
         {
             position: [116.23, 39.53],
             content: "北京 D 楼盘",
-        },        
+        },
     ];
 
     function getPointContent(content) {

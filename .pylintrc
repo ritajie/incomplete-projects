@@ -1,0 +1,7 @@
+[MESSAGES CONTROL]
+disable=all
+ignore=venv,venv_op
+enable=unexpected-keyword-arg,
+       no-value-for-parameter,
+       assignment-from-no-return,
+       too-many-function-args

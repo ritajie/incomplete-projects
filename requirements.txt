@@ -1,0 +1,2 @@
+django==2.2
+pre-commit==2.20.0

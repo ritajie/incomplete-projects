@@ -1,0 +1,32 @@
+[flake8]
+# B = bugbear
+# E = pycodestyle errors
+# F = flake8 pyflakes
+# W = pycodestyle warnings
+# B9 = bugbear opinions
+# N8 = pep-naming
+# C = mccabe
+# T = flake8-print
+select = B, E, F, W, B9, N8, C, T
+ignore =
+    C407
+    C408
+    E203
+    E402
+    E501
+    E722
+    W503
+    B009
+    B010
+    B950
+    B902
+    N812
+    F403
+    E127
+    C901
+    E126
+max-line-length = 120
+max-complexity = 14
+per-file-ignores =
+# __init__ modules export names; unable to detect undefined names
+    **/__init__.py: F401, F403

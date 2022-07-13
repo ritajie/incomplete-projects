@@ -1,0 +1,9 @@
+*DS_Store
+__pycache__/
+.python-version
+.vscode
+venv/
+nohup.out
+*.log
+*tar.gz
+db.sqlite3
