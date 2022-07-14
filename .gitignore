@@ -7,3 +7,5 @@ nohup.out
 *.log
 *tar.gz
 db.sqlite3
+incomplete_projects/config/config.py
+settings_local.py
