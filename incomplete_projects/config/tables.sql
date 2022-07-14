@@ -1,7 +1,7 @@
 CREATE TABLE `building` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
-    `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0=正在正常施工 1=正常施工完成 -1=已烂尾',
+    `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0=正在正常施工 1=正常施工完成 -1=已烂尾 -2=业主停止还贷',
     `address` varchar(255) NOT NULL,
     `city` varchar(255) NOT NULL,
     `description` text NOT NULL,

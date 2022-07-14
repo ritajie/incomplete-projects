@@ -7,6 +7,7 @@ class BuildingStatus(enum.IntEnum):
     UNDER_CONSTRUCTION = 0
     CONSTRUCTION_COMPLETED = 1
     ABANDON_CONSTRUCTION = -1
+    PEOPLE_STOP_REPAYMENT = -2
 
 
 class Building(models.Model):
@@ -21,6 +22,7 @@ class Building(models.Model):
             (0, "Under construction"),
             (1, "Construction completed"),
             (-1, "Abandon construction"),
+            (-2, "People stop repayment"),
         ],
     )
     address = models.CharField(max_length=255, db_column="address")
