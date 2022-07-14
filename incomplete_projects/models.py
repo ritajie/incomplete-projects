@@ -26,5 +26,5 @@ class Building(models.Model):
     address = models.CharField(max_length=255, db_column="address")
     city = models.CharField(max_length=255, db_column="city")
     description = models.TextField(db_column="description")
-    postion_longitude = models.FloatField(db_column="position_longitude")
+    position_longitude = models.FloatField(db_column="position_longitude")
     position_latitude = models.FloatField(db_column="position_latitude")
