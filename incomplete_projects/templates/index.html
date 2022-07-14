@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/comment-box.css' %}">
     <script src="https://webapi.amap.com/loader.js"></script>
+    <script src="{% static 'js/api.js' %}"></script>
 </head>
 
 <body>
@@ -21,43 +22,31 @@
 <script>
     var points = [
         {
-            position: [116.50, 39.50],
-            content: "北京 A 楼盘",
-        },
-        {
-            position: [116.61, 39.81],
-            content: "北京 B 楼盘",
-        },
-        {
-            position: [116.32, 39.92],
-            content: "北京 C 楼盘",
-        },
-        {
-            position: [116.23, 39.53],
-            content: "北京 D 楼盘",
-        },
+            "address": "demo",
+            "city": "demo",
+            "description": "demo",
+            "id": 0,
+            "name": "demo",
+            "position_latitude": 116.3,
+            "position_longitude": 39.5,
+        }
     ];
-
     function getPointContent(content) {
         return `<div class="comment-box">${content}</div>`
     }
 
-    function setPoints(points) {
-        /*
-        points: [
-           {
-               position: [111, 2222],
-               content: "北京 A 楼盘",
-           }
-        ]
-        */
+    async function setPoints() {
+        points = await getBulidings();
         AMapLoader.load({}).then((AMap)=>{
             var markers = [];
             for (var i = 0; i < points.length; i++) {
+                console.log("position:", [points[i].position_latitude, points[i].position_longitude]);
+                console.log("content:", getPointContent(points[i].name));
                 var marker = new AMap.Marker({
-                    position: points[i].position,
+                    position: [points[i].position_latitude, points[i].position_longitude],
                     offset: new AMap.Pixel(-16, -32),
-                    content: getPointContent(points[i].content)
+                    content: getPointContent(points[i].name),
+                    title: points[i].description,
                 });
                 marker.setMap(map);
                 markers.push(marker);
