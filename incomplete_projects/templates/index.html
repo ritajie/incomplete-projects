@@ -9,7 +9,7 @@
     <title>Document</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/comment-box.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/map-point-label.css' %}">
     <script src="https://webapi.amap.com/loader.js"></script>
     <script src="{% static 'js/api.js' %}"></script>
 </head>
@@ -26,13 +26,17 @@
             "city": "demo",
             "description": "demo",
             "id": 0,
+            "status": 1,
             "name": "demo",
             "position_latitude": 116.3,
             "position_longitude": 39.5,
         }
     ];
     function getPointContent(content) {
-        return `<div class="comment-box">${content}</div>`
+        return `<div class="map-point-label">
+                    <span class="point-label-status">停工3个月</span>
+                    <span class="point-label-content">${content}</span>
+                </div>`
     }
 
     async function setPoints() {

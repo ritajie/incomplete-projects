@@ -16,6 +16,7 @@ class BulidingView(View):
                     "id": building.id,
                     "name": building.name,
                     "address": building.address,
+                    "status": building.status,
                     "city": building.city,
                     "description": building.description,
                     "position_longitude": building.position_longitude,
