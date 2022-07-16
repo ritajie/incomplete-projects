@@ -7,7 +7,10 @@ from incomplete_projects.utils.http import http_response
 class BulidingView(View):
     def get(self, request):
         buildings = BuildingService.get_list(
-            building_statuses=[BuildingStatus.ABANDON_CONSTRUCTION],
+            building_statuses=[
+                BuildingStatus.ABANDON_CONSTRUCTION,
+                BuildingStatus.PEOPLE_STOP_REPAYMENT,
+            ],
         )
 
         return http_response(
@@ -19,8 +22,8 @@ class BulidingView(View):
                     "status": building.status,
                     "city": building.city,
                     "description": building.description,
-                    "position_longitude": building.position_longitude,
-                    "position_latitude": building.position_latitude,
+                    "position_longitude": float(building.position_longitude),
+                    "position_latitude": float(building.position_latitude),
                 }
                 for building in buildings
             ],

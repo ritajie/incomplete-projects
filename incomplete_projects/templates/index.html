@@ -32,14 +32,20 @@
             "position_longitude": 39.5,
         }
     ];
-    function getPointContent(content) {
+    function getPointContent(status, content) {
         return `<div class="map-point-label">
-                    <span class="point-label-status">停工3个月</span>
+                    <span class="point-label-status">${status}</span>
                     <span class="point-label-content">${content}</span>
                 </div>`
     }
 
     async function setPoints() {
+        var statusToChinese = {
+            "0": "正在施工",
+            "1": "施工完成",
+            "-1": "停工",
+            "-2": "业主停贷",
+        };
         points = await getBulidings();
         AMapLoader.load({}).then((AMap)=>{
             var markers = [];
@@ -47,9 +53,9 @@
                 console.log("position:", [points[i].position_latitude, points[i].position_longitude]);
                 console.log("content:", getPointContent(points[i].name));
                 var marker = new AMap.Marker({
-                    position: [points[i].position_latitude, points[i].position_longitude],
+                    position: [points[i].position_longitude, points[i].position_latitude],
                     offset: new AMap.Pixel(-16, -32),
-                    content: getPointContent(points[i].name),
+                    content: getPointContent(statusToChinese[points[i].status], points[i].name),
                     title: points[i].description,
                 });
                 marker.setMap(map);
