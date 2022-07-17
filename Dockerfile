@@ -10,8 +10,8 @@ RUN pip install --upgrade pip \
 
 EXPOSE 1236
 
-COPY . /root/building/
+COPY . /root/incomplete_projects/
 
-WORKDIR /root/building/
+WORKDIR /root/incomplete_projects/
 
 CMD ["/bin/bash", "bin/run.sh"]
