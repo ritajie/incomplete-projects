@@ -20,19 +20,25 @@
 </head>
 
 <body>
-    <h1>烂尾楼汇总</h1>
-    <section class="container mb-4 pb-3">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="form-check">
-                    <label class="form-check-label form-check-toggle">
-                        <input id="show-detail-checkbox" class="form-check-input" type="checkbox" checked="checked" /><span>显示楼盘详细信息</span>
-                    </label>
+    <div class="header">
+        <div style="font-weight: bold; margin-bottom: 10px">烂尾/停贷楼数据汇总</div>
+        <hr>
+        <section class="container mb-4 pb-3">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-check" style="margin:0">
+                        <label class="form-check-label form-check-toggle">
+                            <input id="show-detail-checkbox" class="form-check-input" type="checkbox" checked="checked" /><span>显示楼盘详细信息</span>
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
     <div id="container" class="col-md-12"></div>
+    <!-- <div class="footer">
+        数据来源：
+    </div> -->
 </body>
 
 <script>
@@ -119,9 +125,20 @@
 
 
 <style>
+    .header {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: white;
+        border-radius: 4px;
+        box-shadow: 0 0 3px rgb(0 0 0 / 50%);
+        z-index: 1;
+        padding: 8px;
+        min-width: 200px;
+    }
     #container {
-        min-height: 60vh;
-        border: 2px solid #ccc;
+        width: 100%;
+        height: 100vh;
     }
 </style>
 

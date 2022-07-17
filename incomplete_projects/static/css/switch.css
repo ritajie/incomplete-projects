@@ -7,7 +7,6 @@
   .form-check-toggle {
     position: relative;
     padding-left: 0;
-    line-height: 30px;
   }
   .form-check-toggle input {
     display: block;
@@ -26,8 +25,8 @@
   .form-check-toggle input + span {
     cursor: pointer;
     user-select: none;
-    height: 30px;
-    margin-left: 70px;
+    height: 15px;
+    margin-left: 35px;
     display: block;
   }
   .form-check-toggle input + span:before {
@@ -35,17 +34,17 @@
     position: absolute;
     left: 0;
     display: inline-block;
-    height: 30px;
-    width: 50px;
+    height: 15px;
+    width: 25px;
     background: #FFF;
     border: solid 1px #eff2f3;
     transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
     border-radius: 15px;
   }
   .form-check-toggle input + span:after {
-    width: 28px;
-    height: 28px;
-    margin-top: 1px;
+    width: 14px;
+    height: 14px;
+    margin-top: 1.5px;
     margin-left: 1px;
     border-radius: 50%;
     position: absolute;
@@ -61,7 +60,7 @@
   }
   .form-check-toggle input:checked + span:after {
     content: "";
-    margin-left: 21px;
+    margin-left: 10.5px;
     box-shadow: none;
   }
   .form-check-toggle input:checked + span:before {
