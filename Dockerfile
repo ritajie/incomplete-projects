@@ -8,7 +8,7 @@ RUN apt update
 RUN pip install --upgrade pip \
     && pip install -r requirements.txt
 
-EXPOSE 1235
+EXPOSE 1236
 
 COPY . /root/building/
 
