@@ -1,3 +1,5 @@
+import json
+
 from django.views.generic import View
 from incomplete_projects.models import BuildingStatus
 from incomplete_projects.service.building import BuildingService
@@ -19,9 +21,12 @@ class BulidingView(View):
                     "id": building.id,
                     "name": building.name,
                     "address": building.address,
+                    "phone": building.telephone,
                     "status": building.status,
+                    "province": building.province,
                     "city": building.city,
                     "description": building.description,
+                    "photos": [p["url"] for p in json.loads(building.photos or "[]")],
                     "position_longitude": float(building.position_longitude),
                     "position_latitude": float(building.position_latitude),
                 }

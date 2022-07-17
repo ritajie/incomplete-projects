@@ -24,7 +24,7 @@ class Command(BaseCommand):
                 city=amap_data["cityname"],
                 province=amap_data["pname"],
                 telephone=amap_data["tel"],
-                photos=amap_data["photos"],
+                photos=json.dumps(amap_data["photos"] or []),
                 position_longitude=amap_data["location"].split(",")[0],
                 position_latitude=amap_data["location"].split(",")[1],
             )

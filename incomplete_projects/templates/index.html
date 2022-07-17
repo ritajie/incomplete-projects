@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <title>Document</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
@@ -17,23 +18,98 @@
     <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/switch.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <style>
+        hr {
+            margin: 5px 0;
+        }
+        input[type=checkbox], input[type=radio] {
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
     <div class="header">
-        <div style="font-weight: bold; margin-bottom: 10px">烂尾/停贷楼数据汇总</div>
-        <hr>
+        <div style="font-weight: bold; margin-bottom: 10px">
+            烂尾/停贷楼数据汇总
+            <span id="toggle-about-detail-button" class="glyphicon glyphicon-question-sign" aria-hidden="true" style="line-height: normal; float: right"></span>
+        </div>
+        <!-- <hr> -->
         <section class="container mb-4 pb-3">
             <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-check" style="margin:0">
-                        <label class="form-check-label form-check-toggle">
-                            <input id="show-detail-checkbox" class="form-check-input" type="checkbox" checked="checked" /><span>显示楼盘详细信息</span>
-                        </label>
-                    </div>
+                <div class="form-check" style="margin:0;">
+                    <label class="form-check-label form-check-toggle">
+                        <input id="show-detail-checkbox" class="form-check-input" type="checkbox" checked="checked" />
+                        <span style="font-weight: initial;">显示楼盘详细信息</span>
+                    </label>
                 </div>
             </div>
         </section>
+        <div class="about" style="display: none;">
+            <hr>
+            <div>数据来源：<a target="_blank" href="https://github.com/WeNeedHome/SummaryOfLoanSuspension">WeNeedHome</a></div>
+            <div>代码开源：<a target="_blank" href="https://github.com/ritajie/incomplete-projects">Github</a></div>
+            <script>
+                $('#toggle-about-detail-button').click(function() {
+                    $('.about').toggle(100);
+                });
+            </script>
+        </div>
+        <div id="build-detail" style="display: none;">
+            <hr>
+            <span id="remove-build-detail-button" class="glyphicon glyphicon-remove" aria-hidden="true" style="line-height: normal; float: right"></span>
+            <div id="build-detail-name">楼盘：恒大中心</div>
+            <div id="build-detail-status">状态：业主集体停贷</div>
+            <div id="build-detail-city">省市：安徽省 合肥市</div>
+            <div id="build-detail-adress">地址：成都路与衡山路交叉口</div>
+            <div id="build-detail-phone">电话：...</div>
+            <div id="build-detail-photos"></div>
+            <style>
+                #build-detail #build-detail-photos img{
+                    width: 100%;
+                    margin-bottom: 5px;
+                    border-radius: 5px;
+                }
+                #build-detail #build-detail-photos a:last-child img{
+                    margin-bottom: 0;
+                }
+            </style>
+            <script>
+                function removeBuilDetail () {
+                    $('#build-detail').hide(100);
+                }
+                function showBuildDetail (name, status, province, city, address, phone, photos) {
+                    $('#build-detail-name').text('楼盘：' + name);
+                    $('#build-detail-status').text('状态：' + status);
+                    $('#build-detail-city').text('省市：' + province + ' ' + city);
+                    $('#build-detail-adress').text('地址：' + address);
+                    $('#build-detail-phone').text('电话：' + phone);
+                    $('#build-detail-photos').html("");
+                    for (var i = 0; i < photos.length; i++) {
+                        $('#build-detail-photos').append(`<a target="_blank" href="${photos[i]}"><img src="${photos[i]}" alt="">`);
+                    }
+                    $('#build-detail').show(100);
+                }
+                $(document).on("click", "#remove-build-detail-button", function () {
+                    removeBuilDetail();
+                });
+                $(document).on("click touchstart", ".map-point-label, .map-point-point", function () {
+                    // console.log("clicke point");
+                    var name = $(this).parent().attr('data-name');
+                    var status = $(this).parent().attr('data-status');
+                    var province = $(this).parent().attr('data-province');
+                    var city = $(this).parent().attr('data-city');
+                    var address = $(this).parent().attr('data-address');
+                    var phone = $(this).parent().attr('data-phone');
+                    var photos = $(this).parent().attr('data-photos').split(',');
+                    if (photos.length == 1 && photos[0] == "") {
+                        photos = [];
+                    }
+                    showBuildDetail(name, status, province, city, address, phone, photos);
+                });
+            </script>
+        </div>
     </div>
     <div id="container" class="col-md-12"></div>
     <!-- <div class="footer">
@@ -54,13 +130,23 @@
             "position_longitude": 39.5,
         }
     ];
-    function getLableContent(status, content) {
+    function getLableContent(building) {
         return `
-                <div class="map-point-point">
-                </div>
-                <div class="map-point-label">
-                    <span class="point-label-status">${status}</span>
-                    <span class="point-label-content">${content}</span>
+                <div
+                    data-name="${building.name}"
+                    data-status="${building.status}"
+                    data-province="${building.province}"
+                    data-city="${building.city}"
+                    data-address="${building.address}"
+                    data-phone="${building.phone}"
+                    data-photos="${building.photos}"
+                >
+                    <div class="map-point-point">
+                    </div>
+                    <div class="map-point-label">
+                        <span class="point-label-status">${building.status}</span>
+                        <span class="point-label-content">${building.name}</span>
+                    </div>
                 </div>`
     }
 
@@ -93,10 +179,15 @@
         AMapLoader.load({}).then((AMap) => {
             var markers = [];
             for (var i = 0; i < points.length; i++) {
+                points[i].status = statusToChinese[points[i].status];
+                if (points[i].phone == "[]") {
+                    points[i].phone = "无";
+                }
+
                 var marker = new AMap.Marker({
                     position: [points[i].position_longitude, points[i].position_latitude],
                     offset: new AMap.Pixel(-16, -32),
-                    content: getLableContent(statusToChinese[points[i].status], points[i].name),
+                    content: getLableContent(points[i]),
                     title: points[i].name,
                 });
                 marker.setMap(map);
@@ -134,7 +225,7 @@
         box-shadow: 0 0 3px rgb(0 0 0 / 50%);
         z-index: 1;
         padding: 8px;
-        min-width: 200px;
+        width: 200px;
     }
     #container {
         width: 100%;

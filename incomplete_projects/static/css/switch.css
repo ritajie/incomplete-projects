@@ -44,7 +44,7 @@
   .form-check-toggle input + span:after {
     width: 14px;
     height: 14px;
-    margin-top: 1.5px;
+    margin-top: 0.5px;
     margin-left: 1px;
     border-radius: 50%;
     position: absolute;
