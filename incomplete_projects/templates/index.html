@@ -12,11 +12,27 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/map-point-label.css' %}">
     <script src="https://webapi.amap.com/loader.js"></script>
     <script src="{% static 'js/api.js' %}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css"
+        rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/switch.css' %}">
 </head>
 
 <body>
     <h1>烂尾楼汇总</h1>
-    <div id="container"></div>
+    <section class="container mb-4 pb-3">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-check">
+                    <label class="form-check-label form-check-toggle">
+                        <input id="show-detail-checkbox" class="form-check-input" type="checkbox" checked="checked" /><span>显示楼盘详细信息</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="container" class="col-md-12"></div>
 </body>
 
 <script>
@@ -32,12 +48,33 @@
             "position_longitude": 39.5,
         }
     ];
-    function getPointContent(status, content) {
-        return `<div class="map-point-label">
+    function getLableContent(status, content) {
+        return `
+                <div class="map-point-point">
+                </div>
+                <div class="map-point-label">
                     <span class="point-label-status">${status}</span>
                     <span class="point-label-content">${content}</span>
                 </div>`
     }
+
+    function getPointContent() {
+        return `<div class="map-point-point"></div>`
+    }
+
+    $("#show-detail-checkbox").change(function() {
+        var checked = $(this).prop("checked");
+        if (checked) {
+            $(".map-point-label").show();
+        } else {
+            $(".map-point-label").hide();
+        }
+    })
+
+    $(document).on("hover", ".map-point-point", function() {
+        console.log("hover");
+        $(this).parent().find(".map-point-label").show();
+    })
 
     async function setPoints() {
         var statusToChinese = {
@@ -47,36 +84,34 @@
             "-2": "业主停贷",
         };
         points = await getBulidings();
-        AMapLoader.load({}).then((AMap)=>{
+        AMapLoader.load({}).then((AMap) => {
             var markers = [];
             for (var i = 0; i < points.length; i++) {
-                console.log("position:", [points[i].position_latitude, points[i].position_longitude]);
-                console.log("content:", getPointContent(points[i].name));
                 var marker = new AMap.Marker({
                     position: [points[i].position_longitude, points[i].position_latitude],
                     offset: new AMap.Pixel(-16, -32),
-                    content: getPointContent(statusToChinese[points[i].status], points[i].name),
-                    title: points[i].description,
+                    content: getLableContent(statusToChinese[points[i].status], points[i].name),
+                    title: points[i].name,
                 });
                 marker.setMap(map);
                 markers.push(marker);
             }
             map.add(markers);
-        }).catch((e)=>{
+        }).catch((e) => {
             console.error(e);
         });
     }
 
     // main
     AMapLoader.load({
-        key:'1df6ae0e2f320e0c22a801108d3ba5fc',
-        version:'2.0',
-        plugins:['AMap.Scale','AMap.ToolBar', 'AMap.MapType']
-    }).then((AMap)=>{
+        key: '1df6ae0e2f320e0c22a801108d3ba5fc',
+        version: '2.0',
+        plugins: ['AMap.Scale', 'AMap.ToolBar', 'AMap.MapType']
+    }).then((AMap) => {
         map = new AMap.Map('container');
         map.addControl(new AMap.ToolBar())
         map.addControl(new AMap.MapType())
-    }).catch((e)=>{
+    }).catch((e) => {
         console.error(e);
     });
     setPoints(points);
@@ -85,8 +120,7 @@
 
 <style>
     #container {
-        width: 1000px;
-        height: 500px;
+        min-height: 60vh;
         border: 2px solid #ccc;
     }
 </style>
