@@ -37,4 +37,4 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${{env.aliyun_user}}@${{env.aliyun_host}} "
             cd ${{env.target_dir}} && git fetch --all && git reset --hard origin/master &&
             cp -r incomplete_projects/static /var/www/building &&
-            sudo docker build -t incomplete-projects:latest . && sudo docker rm incomplete_projects && sudo docker run -p 1236:1236 -d --name incomplete_projects incomplete-projects"
+            sudo docker build -t incomplete-projects:latest . && sudo docker rm -f incomplete_projects && sudo docker run -p 1236:1236 -d --name incomplete_projects incomplete-projects"
